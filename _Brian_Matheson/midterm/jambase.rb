@@ -7,16 +7,21 @@ class JamBase
 
   attr_reader :data, :url
 
-  def initialize
+  def initialize(url)
     if self.read('jambase.dat')
-      return true
-    else
-      @url = 'http://api.jambase.com/events?artistId=1977&api_key=6wc8war5yfb7mnd3b8vxazyf&o=json'
-  
-      require 'rest-client'
-      @data = JSON.load(RestClient.get(url))
-      self.write('jambase.dat')
+      if @url == url
+        return true
+      else
+        @url = url
+        fetch_data_from_jambase
+      end
     end
+  end
+
+  def fetch_data_from_jambase
+    require 'rest-client'
+    @data = JSON.load(RestClient.get(@url))
+    self.write('jambase.dat')
   end
 
   def name
@@ -24,6 +29,23 @@ class JamBase
   end
   
   def city
-    data["Events"][0]["Venue"]["City"] 
+    if results?
+      return data["Events"][0]["Venue"]["City"]
+    else
+      return nil
+    end
   end
+
+  def state
+    if results?
+      return data["Events"][0]["Venue"]["State"]
+    else
+      return nil
+    end
+  end
+
+  def results?
+    data["Info"]["TotalResults"].to_i > 0
+  end
+
 end
