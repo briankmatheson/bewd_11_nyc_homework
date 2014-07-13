@@ -44,6 +44,14 @@ class JamBase
     end
   end
 
+  def artist_by_name
+    if results?
+      return data["Artists"][0]["Id"]
+    else
+      return nil
+    end
+  end
+
   def results?
     data["Info"]["TotalResults"].to_i > 0
   end

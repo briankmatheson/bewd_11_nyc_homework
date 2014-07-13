@@ -23,6 +23,13 @@ class Shell
       if done?(line)
         exit
         return
+      elsif new_query?(line)
+        @prompt = '> '
+      elsif command?(line)
+        puts ": " + @commands.to_s
+      elsif lookup?(line)
+        a = line.split(" ", 2)
+        lookup(a[1])
       elsif run?(line)
         run
         @commands = []
@@ -53,6 +60,17 @@ class Shell
     @results = JamBase.new(url)
     
     print_venue(@results)
+  end
+
+  def lookup(name)
+
+    query = JamBaseQuery.new(['lookup', name])
+    url = query.parse
+    
+    @results = JamBase.new(url)
+    
+    @commands.push 'artist'
+    @commands.push @results.artist_by_name.to_s
   end
 
   def run?(line)
@@ -109,7 +127,31 @@ class Shell
       return false
     end
   end
+  
+  def lookup?(line)
+    if @prompt == '> ' && line.match("^l")
+      return true
+    else 
+      return false
+    end
+  end
+  
+  def command?(line)
+    if line.match("^c")
+      return true
+    else 
+      return false
+    end
+  end
 
+  def new_query?(line)
+    if line.match("^n")
+      return true
+    else 
+      return false
+    end
+  end
+  
   def print_location(o)
     if o.results?
       puts o.city + ", " + o.state
@@ -117,7 +159,7 @@ class Shell
       puts "No shows found."
     end
   end
-
+  
   def print_venue(o)
     if o.results?
       puts o.venue
