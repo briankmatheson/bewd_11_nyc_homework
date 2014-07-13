@@ -15,7 +15,6 @@ class JamBaseQuery
 
     while commands.length > 0 do
       command = commands.shift
-      puts "found #{command} in commands"
       if command == 'lookup'
         arg_list['lookup'] = commands.shift
       elsif command == 'artist'

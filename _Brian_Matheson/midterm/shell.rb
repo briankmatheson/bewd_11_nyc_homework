@@ -15,6 +15,7 @@ class Shell
       Readline::HISTORY.push string
     end
     @commands = []
+    @results = {}
     @prompt = "> "
 
     help
@@ -24,16 +25,14 @@ class Shell
         exit
         return
       elsif new_query?(line)
-        @prompt = '> '
-      elsif command?(line)
-        puts ": " + @commands.to_s
+        @commands = []
+        @results = nil
       elsif lookup?(line)
         a = line.split(" ", 2)
         lookup(a[1])
       elsif run?(line)
         run
         @commands = []
-        @prompt = "? "
       elsif print?(line)
         line.split(" ").each do |word|
           @commands << word
@@ -46,9 +45,13 @@ class Shell
           @commands << word
         end
       end
-      if @commands.include?("zip") && 
+      if @results.respond_to?(:results?)
+        @prompt = commands.to_s + "? "
+      elsif @commands.include?("zip") && 
           @commands.include?("artist")
-        @prompt = "! "
+        @prompt = commands.to_s + "! "
+      else
+        @prompt = commands.to_s + "> "
       end
     end
   end
@@ -69,18 +72,21 @@ class Shell
     
     @results = JamBase.new(url)
     
-    if @results.results? == 1
-      @commands.push 'artist'
-      @commands.push @results.artist_by_name
-    elsif @results.results? > 1
-      puts @results.list_artists
+    if @results.results?
+      if @results.results? == 1
+        @commands.push 'artist'
+        @commands.push @results.artist_by_name
+      else @results.results? > 1
+        puts @results.list_artists
+      end
     else
       puts "No match for artist lookup."
+      @results = {}
     end
   end
 
   def run?(line)
-    if prompt == "! " && line == ""
+    if prompt.end_with?("! ") && line == ""
       return true
     elsif line == "run"
       return true
@@ -110,7 +116,7 @@ class Shell
   end
 
   def help?(line)
-    if prompt == "> " && line == ""
+    if prompt.end_with?("> ") && line == ""
       return true
     elsif line == "help"
       return true
@@ -122,7 +128,7 @@ class Shell
   end
 
   def print?(line)
-    if prompt == "? " && line == ""
+    if prompt.end_with?("? ") && line == ""
       @commands = []
       @commands.push "print"
       @commands.push "venue"
@@ -135,7 +141,7 @@ class Shell
   end
   
   def lookup?(line)
-    if @prompt == '> ' && line.match("^l")
+    if @prompt.end_with?("> ") && line.match("^l")
       return true
     else 
       return false
@@ -176,12 +182,8 @@ class Shell
 
   def parse_print
 
-    puts "commands.size = " + @commands.size.to_s
-
     if @commands[0].to_s.match('^p') && @commands.size == 2
       thing = @commands[1]
-
-      puts "thing is " + thing
     else
       thing = 'venue'
     end
