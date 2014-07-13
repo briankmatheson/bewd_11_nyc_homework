@@ -24,7 +24,7 @@ class JamBase
     self.write('jambase.dat')
   end
 
-  def name
+  def venue
     data["Events"][0]["Venue"]["Name"] 
   end
   
