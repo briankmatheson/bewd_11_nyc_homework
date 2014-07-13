@@ -5,6 +5,8 @@ require_relative 'writable'
 class Shell
   include Readable
   include Writable
+
+  attr_accessor :prompt, :commands
   
   def initialize
     @saved_history = []
@@ -12,18 +14,25 @@ class Shell
     @saved_history.each do |string|
       Readline::HISTORY.push string
     end
-    commands = []
-
-    while line = Readline.readline("> ", true)
-      if line == "exit" || line == "quit"
+    @commands = []
+    @prompt = "> "
+    while line = Readline.readline(prompt, true)
+      if done(line)
         exit
         return
-      elsif line == "run"
+      elsif run?(line)
         run(commands)
-        commands = []
+        @commands = []
+        @prompt = "> "
       else
         # split line on any whitespace and append
-        commands << line.split(" ")
+        line.split(" ").each do |word|
+          @commands << word
+        end
+      end
+      if @commands.include?("zip") && 
+          @commands.include?("artist")
+        @prompt = "! "
       end
     end
   end
@@ -40,7 +49,29 @@ class Shell
       puts "No shows found."
     end
   end
-  
+
+  def run?(line)
+    if prompt == "! " && line == ""
+      return true
+    elsif line == "run"
+      return true
+    else
+      return false
+    end
+  end
+
+  def done(line)
+    if prompt == "> " && line == ""
+      return true
+    elsif line == "exit"
+      return true
+    elsif line == "quit" 
+      return true
+    else 
+      return false
+    end
+  end
+
   def exit
     @saved_history = Readline::HISTORY.to_a
     self.write('jamcli.history')
