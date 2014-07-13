@@ -14,9 +14,7 @@ class Shell
     @saved_history.each do |string|
       Readline::HISTORY.push string
     end
-    @commands = []
-    @results = {}
-    @prompt = "> "
+    new_query
 
     help
 
@@ -25,8 +23,7 @@ class Shell
         exit
         return
       elsif new_query?(line)
-        @commands = []
-        @results = nil
+        new_query
       elsif lookup?(line)
         a = line.split(" ", 2)
         lookup(a[1])
@@ -127,11 +124,21 @@ class Shell
     end
   end
 
+  def new_query
+    @commands = []
+    @results = nil
+    @prompt = commands.to_s + "> "
+  end
+
   def print?(line)
     if prompt.end_with?("? ") && line == ""
-      @commands = []
-      @commands.push "print"
-      @commands.push "venue"
+      if @results.respond_to?(:results?)
+        @commands = []
+        @commands.push "print"
+        @commands.push "venue"
+      else
+        new_query
+      end
       return true
     elsif line.match "^p"
       return true
