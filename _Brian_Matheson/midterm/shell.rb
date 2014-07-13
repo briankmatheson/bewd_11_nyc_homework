@@ -42,7 +42,7 @@ class Shell
           @commands << word
         end
       end
-      if @results.respond_to?(:results?)
+      if @results.respond_to?('results?')
         @prompt = commands.to_s + "? "
       elsif @commands.include?("zip") && 
           @commands.include?("artist")
@@ -132,7 +132,7 @@ class Shell
 
   def print?(line)
     if prompt.end_with?("? ") && line == ""
-      if @results.respond_to?(:results?)
+      if @results.respond_to?('results?') && @results.results?
         @commands = []
         @commands.push "print"
         @commands.push "venue"
@@ -172,7 +172,7 @@ class Shell
   end
   
   def print_location(o)
-    if o.results?
+    if o.respond_to?('results?') && o.results?
       puts o.city + ", " + o.state
     else
       puts "No shows found."
@@ -180,7 +180,7 @@ class Shell
   end
   
   def print_venue(o)
-    if o.results?
+    if o.respond_to?('results?') && o.results?
       puts o.venue
     else
       puts "No shows found."
