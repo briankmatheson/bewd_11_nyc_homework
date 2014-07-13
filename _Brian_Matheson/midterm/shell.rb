@@ -81,8 +81,8 @@ class Shell
       end
     else
       puts "No match for artist lookup."
-      @results = {}
     end
+    @results = {}
   end
 
   def run?(line)
