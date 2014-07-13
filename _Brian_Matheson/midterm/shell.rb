@@ -69,8 +69,14 @@ class Shell
     
     @results = JamBase.new(url)
     
-    @commands.push 'artist'
-    @commands.push @results.artist_by_name.to_s
+    if @results.results? == 1
+      @commands.push 'artist'
+      @commands.push @results.artist_by_name
+    elsif @results.results? > 1
+      puts @results.list_artists
+    else
+      puts "No match for artist lookup."
+    end
   end
 
   def run?(line)

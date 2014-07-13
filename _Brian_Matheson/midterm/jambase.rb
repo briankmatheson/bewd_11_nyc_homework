@@ -46,14 +46,26 @@ class JamBase
 
   def artist_by_name
     if results?
-      return data["Artists"][0]["Id"]
+      return data["Artists"][0]["Id"].to_s
     else
       return nil
     end
   end
 
-  def results?
-    data["Info"]["TotalResults"].to_i > 0
-  end
+  def list_artists
+    a = []
 
+    data["Artists"].each do |artist|
+      a.push artist["Id"].to_s + ": " + artist["Name"].to_s
+    end
+    return a
+  end    
+  
+  def results?
+    if data["Info"]["TotalResults"].to_i > 0
+      return data["Info"]["TotalResults"].to_i
+    else
+      return false
+    end
+  end
 end
