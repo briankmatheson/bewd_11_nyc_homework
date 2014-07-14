@@ -1,4 +1,4 @@
-
+require 'addressable/uri'
 
 class JamBaseQuery
   attr_accessor :commands, :zip_code, :artist_id
@@ -42,6 +42,7 @@ class JamBaseQuery
 
   def artist_by_name(artist_name)
     @query_type = 'artists'
+    artist_name = Addressable::URI.escape(artist_name)
     return "&name=#{artist_name}"
   end
 
@@ -71,7 +72,7 @@ class JamBaseQuery
       end
     end
     if ! @artist_id.empty? && ! @zip_code.empty?
-      return base_url + query_string
+      base_url + query_string
     else
       return false
     end
