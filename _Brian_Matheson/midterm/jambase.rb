@@ -44,6 +44,14 @@ class JamBase
     end
   end
 
+  def date
+    if results?
+      return data["Events"][0]["Date"]
+    else
+      return nil
+    end
+  end
+
   def artist_by_name
     if results?
       return data["Artists"][0]["Id"].to_s

@@ -24,17 +24,17 @@ class Shell
         return
       elsif new_query?(line)
         new_query
-      elsif lookup?(line)
-        a = line.split(" ", 2)
-        lookup(a[1])
-      elsif run?(line)
-        run
-        @commands = []
       elsif print?(line)
         line.split(" ").each do |word|
           @commands << word
         end
         parse_print
+        @commands = []
+      elsif lookup?(line)
+        a = line.split(" ", 2)
+        lookup(a[1])
+      elsif run?(line)
+        run
         @commands = []
       else
         # split line on any whitespace and append
@@ -59,7 +59,7 @@ class Shell
     
     @results = JamBase.new(url)
     
-    print_venue(@results)
+    print_detail(@results)
   end
 
   def lookup(name)
@@ -106,9 +106,14 @@ class Shell
     puts "use directives to specify zip code and"
     puts "artist id.  Type run to execute query."
     puts ""
-    puts ""
     puts "e.g. > artist 1977 zip 10010"
-    puts "     > run"
+    puts "     ! run"
+    puts "     ? new"
+    puts "     > lookup queens of the stone age"
+    puts "     > zip 10010"
+    puts "     ! [return]"
+    puts "     ? print location"
+    puts "     ? quit"
     puts
   end
 
@@ -171,6 +176,22 @@ class Shell
     end
   end
   
+  def print_detail(o)
+    if o.respond_to?('results?') && o.results?
+      puts o.date + ": " + o.venue + ": " + o.city + ", " + o.state
+    else
+      puts "No shows found."
+    end
+  end
+
+  def print_date(o)
+    if o.respond_to?('results?') && o.results?
+      puts o.date
+    else
+      puts "No shows found."
+    end
+  end
+
   def print_location(o)
     if o.respond_to?('results?') && o.results?
       puts o.city + ", " + o.state
@@ -188,7 +209,6 @@ class Shell
   end
 
   def parse_print
-
     if @commands[0].to_s.match('^p') && @commands.size == 2
       thing = @commands[1]
     else
@@ -199,6 +219,10 @@ class Shell
       print_venue(@results)
     elsif thing.match '^l'
       print_location(@results)
+    elsif thing.match '^v'
+      print_venue(@results)
+    elsif thing.match '^d'
+      print_date(@results)
     end
   end
 
