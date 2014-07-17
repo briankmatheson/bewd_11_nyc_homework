@@ -16,6 +16,8 @@ class Shell
       Readline::HISTORY.push string
     end
     new_query
+    init_commands
+    @prompt = commands.to_s + "> "
 
     help
 
@@ -63,7 +65,7 @@ class Shell
 
   def init_commands
     @commands = []
-    if @zip 
+    if @zip && prompt.end_with?("> ")
       @commands << 'zip'
       @commands << @zip
     end
