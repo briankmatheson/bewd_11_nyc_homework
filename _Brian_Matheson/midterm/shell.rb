@@ -1,4 +1,4 @@
-require "readline"
+require          'readline'
 require_relative 'readable'
 require_relative 'writable'
 
@@ -9,6 +9,7 @@ class Shell
   attr_accessor :prompt, :commands, :results
   
   def initialize
+    @zip = nil
     @saved_history = []
     self.read('jamcli.history')
     @saved_history.each do |string|
@@ -29,17 +30,24 @@ class Shell
           @commands << word
         end
         parse_print
-        @commands = []
+        init_commands
       elsif lookup?(line)
         a = line.split(" ", 2)
         lookup(a[1])
       elsif run?(line)
         run
-        @commands = []
+        init_commands
       else
         # split line on any whitespace and append
+        is_zip = false
         line.split(" ").each do |word|
           @commands << word
+          if word == 'zip'
+            is_zip = true
+          end
+          if is_zip 
+            @zip = word
+          end
         end
       end
       if @results.respond_to?('results?')
@@ -50,6 +58,14 @@ class Shell
       else
         @prompt = commands.to_s + "> "
       end
+    end
+  end
+
+  def init_commands
+    @commands = []
+    if @zip 
+      @commands << 'zip'
+      @commands << @zip
     end
   end
 
@@ -130,7 +146,7 @@ class Shell
   end
 
   def new_query
-    @commands = []
+    init_commands
     @results = nil
     @prompt = commands.to_s + "> "
   end
@@ -138,7 +154,7 @@ class Shell
   def print?(line)
     if prompt.end_with?("? ") && line == ""
       if @results.respond_to?('results?') && @results.results?
-        @commands = []
+        init_commands
         @commands.push "print"
         @commands.push "venue"
       else
