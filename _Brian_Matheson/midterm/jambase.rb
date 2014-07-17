@@ -5,27 +5,39 @@ class JamBase
   include Readable
   include Writable
   
-  attr_accessor :data
-
   def initialize(url)
-    @cache={}
-    @cache[url]={}
-    if self.read('jambase.dat') &&
-        @cache[url][:data].class == Hash &&
-        @cache[url][:time] > (Time.now - 86400)
-      puts "Using cached data"
-    else
-      fetch_data_from_jambase(url)
-    end
-    data = @cache[url][:data]
-  end
 
+    @cache = {}
+    
+    if self.read('jambase.dat') 
+      if @cache.keys.include?(url)
+        if @cache[url].class == Hash
+          if @cache[url].keys.include?('time')
+            if @cache[url]['time'] > (Time.now.to_i - 86400)
+              puts "Using cached data"
+              @url = url
+              return
+            end
+          end
+        end
+      end
+    end
+    @cache[url] = {}
+    @url = url
+    puts "fetching data from jambase"
+    fetch_data_from_jambase(url)
+  end
+  
   def fetch_data_from_jambase(url)
     require 'rest-client'
-    @cache[url][:data] = JSON.load(RestClient.get(url))
-    @cache[url][:time] = Time.now
+    @cache[url]['data'] = JSON.load(RestClient.get(url))
+    @cache[url]['time'] = Time.now.to_i
     
     self.write('jambase.dat')
+  end
+
+  def data
+    @cache[@url]['data']
   end
 
   def venue
