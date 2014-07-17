@@ -4,23 +4,27 @@ require_relative 'writable'
 class JamBase
   include Readable
   include Writable
-
-  attr_reader :data, :url
+  
+  attr_accessor :data
 
   def initialize(url)
-    if self.read('jambase.dat')
-      if @url == url
-        return true
-      else
-        @url = url
-        fetch_data_from_jambase
-      end
+    @cache={}
+    @cache[url]={}
+    if self.read('jambase.dat') &&
+        @cache[url][:data].class == Hash &&
+        @cache[url][:time] > (Time.now - 86400)
+      puts "Using cached data"
+    else
+      fetch_data_from_jambase(url)
     end
+    data = @cache[url][:data]
   end
 
-  def fetch_data_from_jambase
+  def fetch_data_from_jambase(url)
     require 'rest-client'
-    @data = JSON.load(RestClient.get(@url))
+    @cache[url][:data] = JSON.load(RestClient.get(url))
+    @cache[url][:time] = Time.now
+    
     self.write('jambase.dat')
   end
 
@@ -70,8 +74,10 @@ class JamBase
   end    
   
   def results?
-    if data["Info"]["TotalResults"].to_i > 0
-      return data["Info"]["TotalResults"].to_i
+    if data.class == Hash
+      if data["Info"]["TotalResults"].to_i > 0
+        return data["Info"]["TotalResults"].to_i
+      end
     else
       return false
     end
