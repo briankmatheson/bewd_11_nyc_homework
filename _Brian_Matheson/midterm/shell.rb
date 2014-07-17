@@ -50,7 +50,7 @@ class Shell
           end
         end
       end
-      if @results.respond_to?('results?')
+      if @results.first.respond_to?('results?')
         @prompt = commands.to_s + "? "
       elsif @commands.include?("zip") && 
           @commands.include?("artist")
@@ -69,33 +69,39 @@ class Shell
     end
   end
 
+  def do_query(commands)
+    query = JamBaseQuery.new(commands)
+    urls = query.parse
+    
+    urls.each do |url|
+      @results << JamBase.new(url)
+    end
+  end
+
+  def reset_results
+    @results = []
+  end
+
   def run
-    query = JamBaseQuery.new(@commands)
-    url = query.parse
-    
-    @results = JamBase.new(url)
-    
-    print_detail(@results)
+    do_query(@commands)
+    print_detail(@results.first)
   end
 
   def lookup(name)
 
-    query = JamBaseQuery.new(['lookup', name])
-    url = query.parse
-    
-    @results = JamBase.new(url)
-    
-    if @results.results?
-      if @results.results? == 1
+    do_query(['lookup', name])
+
+    if @results.first.results?
+      if @results.first.results? == 1
         @commands.push 'artist'
-        @commands.push @results.artist_by_name
-      else @results.results? > 1
-        puts @results.list_artists
+        @commands.push @results.first.artist_by_name
+      else @results.first.results? > 1
+        puts @results.first.list_artists
       end
     else
       puts "No match for artist lookup."
     end
-    @results = {}
+    reset_results
   end
 
   def run?(line)
@@ -147,13 +153,13 @@ class Shell
 
   def new_query
     init_commands
-    @results = nil
+    reset_results
     @prompt = commands.to_s + "> "
   end
 
   def print?(line)
     if prompt.end_with?("? ") && line == ""
-      if @results.respond_to?('results?') && @results.results?
+      if @results.first.respond_to?('results?') && @results.results?
         init_commands
         @commands.push "print"
         @commands.push "venue"
@@ -228,17 +234,19 @@ class Shell
     if @commands[0].to_s.match('^p') && @commands.size == 2
       thing = @commands[1]
     else
-      thing = 'venue'
+      thing = 'results'
     end
 
-    if thing == 'venue'
-      print_venue(@results)
-    elsif thing.match '^l'
-      print_location(@results)
     elsif thing.match '^v'
-      print_venue(@results)
+      print_venue(@results.first)
+    elsif thing.match '^l'
+      print_location(@results.first)
     elsif thing.match '^d'
-      print_date(@results)
+      print_date(@results.first)
+    elsif thing.match '^r'
+      @results.each do |result|
+        print_detail(result)
+      end
     end
   end
 

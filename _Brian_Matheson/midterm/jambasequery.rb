@@ -16,14 +16,21 @@ class JamBaseQuery
     while commands.length > 0 do
       command = commands.shift
       if command == 'lookup'
-        arg_list['lookup'] = commands.shift
+        # we only ever want to do one lookup at a time
+        arg_list['lookup'] << commands.shift
+        urls << url(arg_list)
+        return urls
       elsif command == 'artist'
-        arg_list['artist'] = commands.shift
+        arg_list['artist'] << commands.shift
       elsif command == 'zip'
-        arg_list['zip'] = commands.shift
+        arg_list['zip'] << commands.shift
       end
     end
-    return url(arg_list)
+    return urls(arg_list)
+  end
+
+  def url(arg_list)
+    urls(arg_list).first
   end
 
   def artist_by_id(artist_id)
@@ -55,24 +62,24 @@ class JamBaseQuery
   end
   
   def url(arg_list)
+    # returns an array of urls to fetch or false
     # where arg_list is a hash of methods to build url
     query_string = ''
     puts arg_list
 
-    arg_list.keys.each do |key|
-      if key == 'lookup'
-        query_string += lookup(arg_list[key])
-        return base_url + query_string
-      else
-        if key == 'artist'
-          query_string += artist(arg_list[key])
-        elsif key == 'zip'
-          query_string += zip(arg_list[key])
-        end
+    if arg_list['lookup'].exists?
+      query_string += lookup(arg_list['lookup'])
+      urls << base_url + query_string
+      return urls
+    end
+
+    arg_list['artist'].each do |artist_id|
+      arg_list['zip'].each do |zip_code|
+        urls << artist(artist_id) + zip(zip_code)
       end
     end
-    if ! @artist_id.empty? && ! @zip_code.empty?
-      base_url + query_string
+    if urls.size > 0
+      return urls
     else
       return false
     end
