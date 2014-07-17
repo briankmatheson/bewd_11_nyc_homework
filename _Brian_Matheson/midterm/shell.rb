@@ -84,6 +84,8 @@ class Shell
     url = query.parse
     
     @results = JamBase.new(url)
+
+    puts @results.list_artists
     
     if @results.results?
       if @results.results? == 1
