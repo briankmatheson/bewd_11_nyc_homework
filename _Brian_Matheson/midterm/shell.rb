@@ -72,21 +72,29 @@ class Shell
   end
 
   def do_query(commands)
+    puts "in do_query"
     query = JamBaseQuery.new(commands)
-    urls = query.parse
-    
-    urls.each do |url|
-      @results << JamBase.new(url)
+    query_output = query.parse
+
+    puts "query output"
+    puts query_output[:urls].size
+
+    0.upto(query_output[:urls].size - 1) do |i|
+      @results[i] = JamBase.new(query_output[:urls][i], query_output[:artists][i])
+      @artists[i] = query_output[:artists][i]
     end
   end
 
   def reset_results
     @results = []
+    @artists = []
   end
 
   def run
     do_query(@commands)
-    print_detail(@results.first)
+      @results.each do |result|
+        print_detail(result)
+      end
   end
 
   def lookup(name)
@@ -167,7 +175,7 @@ class Shell
 
   def print?(line)
     if prompt.end_with?("? ") && line == ""
-      if @results.first.respond_to?('results?') && @results.results?
+      if @results.first.respond_to?('results?') && @results.first.results?
         init_commands
         @commands.push "print"
         @commands.push "venue"
@@ -183,7 +191,8 @@ class Shell
   end
   
   def lookup?(line)
-    if @prompt.end_with?("> ") && line.match("^l")
+    if (@prompt.end_with?("> ") || @prompt.end_with?("! ")) && line.match("^l") 
+      puts 'doing lookup' 
       return true
     else 
       return false
@@ -208,7 +217,15 @@ class Shell
   
   def print_detail(o)
     if o.respond_to?('results?') && o.results?
-      puts o.date + ": " + o.venue + ": " + o.city + ", " + o.state
+      puts o.date + ": " + o.artist + " @ " + o.venue + ": " + o.city + ", " + o.state
+    else
+      puts "No shows found."
+    end
+  end
+
+  def print_artist(o)
+    if o.respond_to?('results?') && o.results?
+      puts o.artists
     else
       puts "No shows found."
     end

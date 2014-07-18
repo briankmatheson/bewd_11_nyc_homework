@@ -4,10 +4,11 @@ require_relative 'writable'
 class JamBase
   include Readable
   include Writable
+  attr_reader :current_artist_id
   
-  def initialize(url)
-
+  def initialize(url, current_artist_id)
     @cache = {}
+    @current_artist_id = current_artist_id
     
     if self.read('jambase.dat') 
       if @cache.keys.include?(url)
@@ -29,15 +30,28 @@ class JamBase
   end
   
   def fetch_data_from_jambase(url)
+    puts url
+    return
+
     require 'rest-client'
     @cache[url]['data'] = JSON.load(RestClient.get(url))
     @cache[url]['time'] = Time.now.to_i
+    @cache[url]['artist'] = current_artist_id
     
     self.write('jambase.dat')
   end
 
   def data
     @cache[@url]['data']
+  end
+
+  def artist
+    data["Events"][0]["Artists"].each do |a|
+      if a["Id"].to_s == current_artist_id
+        return a["Name"]
+      end
+    end
+    return ""
   end
 
   def venue
