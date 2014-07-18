@@ -237,7 +237,7 @@ class Shell
       thing = 'results'
     end
 
-    elsif thing.match '^v'
+    if thing.match '^v'
       print_venue(@results.first)
     elsif thing.match '^l'
       print_location(@results.first)
