@@ -123,6 +123,8 @@ class Shell
   end
 
   def help
+    puts
+    puts
     puts "Thanks to www.jambase.com for providing"
     puts "an awesome database of live shows to see"
     puts
@@ -132,7 +134,7 @@ class Shell
     puts "e.g. > artist 1977 zip 10010"
     puts "     ! run"
     puts "     ? new"
-    puts "     > lookup queens of the stone age"
+    puts "     > lookup the budos band"
     puts "     > zip 10010"
     puts "     ! [return]"
     puts "     ? print location"
