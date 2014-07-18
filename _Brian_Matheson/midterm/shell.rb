@@ -72,13 +72,8 @@ class Shell
   end
 
   def do_query(commands)
-    puts "in do_query"
     query = JamBaseQuery.new(commands)
     query_output = query.parse
-
-    puts "query output"
-    puts query_output[:urls].size
-
     0.upto(query_output[:urls].size - 1) do |i|
       @results[i] = JamBase.new(query_output[:urls][i], query_output[:artists][i])
       @artists[i] = query_output[:artists][i]

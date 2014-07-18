@@ -31,9 +31,6 @@ class JamBase
   end
   
   def fetch_data_from_jambase(url)
-    puts url
-    return
-
     require 'rest-client'
     @cache[url]['data'] = JSON.load(RestClient.get(url))
     @cache[url]['time'] = Time.now.to_i
