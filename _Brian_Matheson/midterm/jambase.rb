@@ -80,7 +80,7 @@ class JamBase
     a = []
 
     data["Artists"].each do |artist|
-      a.push artist["Id"].to_s + ": " + artist["Name"].to_s
+      a.push sprintf("%8s  %s", artist["Id"].to_s, artist["Name"].to_s)
     end
     return a
   end    
