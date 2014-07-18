@@ -123,6 +123,9 @@ class Shell
   end
 
   def help
+    puts "Thanks to www.jambase.com for providing"
+    puts "an awesome database of live shows to see"
+    puts
     puts "use directives to specify zip code and"
     puts "artist id.  Type run to execute query."
     puts ""
