@@ -16,6 +16,8 @@ class Shell
       Readline::HISTORY.push string
     end
     new_query
+    init_commands
+    @prompt = commands.to_s + "> "
 
     help
 
@@ -63,7 +65,7 @@ class Shell
 
   def init_commands
     @commands = []
-    if @zip 
+    if @zip && prompt.end_with?("> ")
       @commands << 'zip'
       @commands << @zip
     end
@@ -125,13 +127,18 @@ class Shell
   end
 
   def help
+    puts
+    puts
+    puts "Thanks to www.jambase.com for providing"
+    puts "an awesome database of live shows to see"
+    puts
     puts "use directives to specify zip code and"
     puts "artist id.  Type run to execute query."
     puts ""
     puts "e.g. > artist 1977 zip 10010"
     puts "     ! run"
     puts "     ? new"
-    puts "     > lookup queens of the stone age"
+    puts "     > lookup the budos band"
     puts "     > zip 10010"
     puts "     ! [return]"
     puts "     ? print location"
@@ -152,6 +159,7 @@ class Shell
   end
 
   def new_query
+    @prompt = "> "
     init_commands
     reset_results
     @prompt = commands.to_s + "> "
