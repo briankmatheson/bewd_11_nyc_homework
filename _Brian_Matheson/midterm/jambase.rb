@@ -4,6 +4,7 @@ require_relative 'writable'
 class JamBase
   include Readable
   include Writable
+  include Comparable
   attr_reader :current_artist_id
   
   def initialize(url, current_artist_id)
@@ -80,6 +81,10 @@ class JamBase
     else
       return nil
     end
+  end
+
+  def <=>(o)
+    date <=> o.date
   end
 
   def artist_by_name

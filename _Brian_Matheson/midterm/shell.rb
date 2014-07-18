@@ -92,7 +92,7 @@ class Shell
 
   def run
     do_query(@commands)
-      @results.each do |result|
+      @results.sort.each do |result|
         print_detail(result)
       end
   end
@@ -269,7 +269,7 @@ class Shell
     elsif thing.match '^d'
       print_date(@results.first)
     elsif thing.match '^r'
-      @results.each do |result|
+      @results.sort.each do |result|
         print_detail(result)
       end
     end
