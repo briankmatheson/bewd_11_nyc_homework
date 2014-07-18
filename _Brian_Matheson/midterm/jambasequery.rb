@@ -72,8 +72,6 @@ class JamBaseQuery
     query_string = ''
     url_list = []
 
-    puts arg_list
-
     if ! arg_list['lookup'].empty?
       query_string += lookup(arg_list['lookup'].first)
       url_list << base_url + query_string
@@ -82,8 +80,6 @@ class JamBaseQuery
 
     arg_list['artist'].each do |artist_id|
       arg_list['zip'].each do |zip_code|
-        print artist_id + zip_code + "\n"
-        puts artist(artist_id) + zip(zip_code)
         url_list << base_url + artist(artist_id) + zip(zip_code)
       end
     end
