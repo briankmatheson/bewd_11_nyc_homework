@@ -11,15 +11,16 @@ class JamBaseQuery
 
   def parse
     commands = @commands
-    arg_list = {}
+    arg_list = { 'artist' => [], 'zip' => [], 'lookup' => [] }
 
     while commands.length > 0 do
       command = commands.shift
       if command == 'lookup'
+        url_list = []
         # we only ever want to do one lookup at a time
         arg_list['lookup'] << commands.shift
-        urls << url(arg_list)
-        return urls
+        url_list << url(arg_list)
+        return url_list
       elsif command == 'artist'
         arg_list['artist'] << commands.shift
       elsif command == 'zip'
@@ -30,7 +31,11 @@ class JamBaseQuery
   end
 
   def url(arg_list)
-    urls(arg_list).first
+    if urls(arg_list).empty?
+      return false
+    else
+       urls(arg_list).first
+    end
   end
 
   def artist_by_id(artist_id)
@@ -61,27 +66,27 @@ class JamBaseQuery
     "http://api.jambase.com/#{@query_type}?api_key=#{@apikey}&o=json"
   end
   
-  def url(arg_list)
-    # returns an array of urls to fetch or false
+  def urls(arg_list)
+    # returns an array of urls to fetch or an empty array
     # where arg_list is a hash of methods to build url
     query_string = ''
+    url_list = []
+
     puts arg_list
 
-    if arg_list['lookup'].exists?
-      query_string += lookup(arg_list['lookup'])
-      urls << base_url + query_string
-      return urls
+    if ! arg_list['lookup'].empty?
+      query_string += lookup(arg_list['lookup'].first)
+      url_list << base_url + query_string
+      return url_list
     end
 
     arg_list['artist'].each do |artist_id|
       arg_list['zip'].each do |zip_code|
-        urls << artist(artist_id) + zip(zip_code)
+        print artist_id + zip_code + "\n"
+        puts artist(artist_id) + zip(zip_code)
+        url_list << base_url + artist(artist_id) + zip(zip_code)
       end
     end
-    if urls.size > 0
-      return urls
-    else
-      return false
-    end
+    return url_list
   end
 end
