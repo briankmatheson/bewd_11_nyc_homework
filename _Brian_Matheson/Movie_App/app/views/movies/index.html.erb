@@ -1,0 +1,25 @@
+<h2>List movies</h2>
+<p>See our <blink>amazing</blink> collection of <%= Movie.last.id %> movies below</p>
+
+<hr>
+
+<table><th>Movies</th>
+<tr>
+<td>Index</td><td>Year Released</td><td>Title</td>
+</tr>
+<tr>
+<% 1.upto(Movie.last.id) do |i| %>
+<tr>
+<td>
+<%= Movie.find(i).id %>
+</td>
+<td>
+<%= Movie.find(i).year_released %>
+</td>
+<td>
+<%= link_to(Movie.find(i).title, movie_path(i))%>
+</td>
+</tr>
+<% end %>
+</table>
+   

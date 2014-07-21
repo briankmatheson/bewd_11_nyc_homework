@@ -1,0 +1,31 @@
+// Place all the styles related to the movies controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 50px;
+}
+
+ul li a {
+    text-decoration: none;
+    font-weight: bolder;
+    letter-spacing: -10px;
+    color: black
+}
+
+ul li {
+    display: inline;
+    font-size: 72px;
+    background-color: white;
+    background-image: url('/images/movie.jpeg');
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 40px;
+    padding-bottom: 70px;
+}
+
