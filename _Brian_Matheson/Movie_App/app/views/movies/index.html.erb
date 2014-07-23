@@ -1,4 +1,6 @@
+<%= render 'search' %>
 <h2>List movies</h2>
+
 <p>See our <blink>amazing</blink> collection of <%= Movie.last.id %> movies below</p>
 
 <hr>
@@ -8,16 +10,16 @@
 <td>Index</td><td>Year Released</td><td>Title</td>
 </tr>
 <tr>
-<% 1.upto(Movie.last.id) do |i| %>
+<% @movie.each do |movie| %>
 <tr>
 <td>
-<%= Movie.find(i).id %>
+<%= movie[:id] %>
 </td>
 <td>
-<%= Movie.find(i).year_released %>
+<%= movie[:year_released] %>
 </td>
 <td>
-<%= link_to(Movie.find(i).title, movie_path(i))%>
+<%= link_to(movie[:title], movie_path(movie[:id]))%>
 </td>
 </tr>
 <% end %>
