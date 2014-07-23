@@ -1,3 +1,0 @@
-<p>Enjoy our snarky description of the movie <%= Movie.find(</p>
-
-
