@@ -11,7 +11,20 @@ class MoviesController < ApplicationController
   def show
   end
 
+  def edit
+    @movie = Movie.search(params[:id])
+    @movie.title = params[:title]
+    @movie.year_released = params[:year_released]
+    @movie.description = params[:description]
+    @movie.save
+  end    
+
   def new
+    movie = Movie.new
+    movie.title = params[:title]
+    movie.year_released = params[:year_released]
+    movie.description = params[:description]
+    movie.save
   end
 
 end
