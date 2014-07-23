@@ -1,0 +1,27 @@
+<%= render 'search' %>
+<h2>List movies</h2>
+
+<p>See our <blink>amazing</blink> collection of <%= Movie.last.id %> movies below</p>
+
+<hr>
+
+<table><th>Movies</th>
+<tr>
+<td>Index</td><td>Year Released</td><td>Title</td>
+</tr>
+<tr>
+<% @movie.each do |movie| %>
+<tr>
+<td>
+<%= movie[:id] %>
+</td>
+<td>
+<%= movie[:year_released] %>
+</td>
+<td>
+<%= link_to(movie[:title], movie_path(movie[:id]))%>
+</td>
+</tr>
+<% end %>
+</table>
+   
