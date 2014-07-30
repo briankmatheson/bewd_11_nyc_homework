@@ -1,0 +1,22 @@
+<h1>Welcome to RetFlix! See our collection of movies below).</h1>
+<%= render 'search' %>
+<%= link_to "Add a new movie.", new_movie_path %> 
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Year Released</th>
+    <th>Description</th>
+  </tr>
+  <%@movies.each do |movie| %>
+  <tr>
+    <td><%=link_to movie.title, movie_path(movie.id)%></td>
+    <td><%=movie.year_released%></td>
+    <td><%=movie.description%></td>
+  </tr>
+  <%end%>
+</table>
+
+
+
+

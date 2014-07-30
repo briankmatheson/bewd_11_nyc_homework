@@ -1,0 +1,18 @@
+<h1>Welcome to RetFlix! See our collection of movies below.</h1>
+<%= link_to "New Movie", new_movie_path %>
+<br>
+<br>
+<%= render "search" %>
+<br>
+<br>
+<%@movies.reverse_each do |movie|%>
+	<%=	"Title: #{movie.title}"%>
+	<br>
+	<%="Description: #{movie.description} | Year Released: #{movie.year_released}"%>
+	<br>
+	<%= link_to "Show", movie_path(movie)%>
+	<%= link_to "Edit", edit_movie_path(movie)%>
+	<%= link_to "Destroy", movie_path(movie), method: :delete, data: { confirm: "Are you sure?"}%>
+	<br>
+	<br>
+<%	end%>

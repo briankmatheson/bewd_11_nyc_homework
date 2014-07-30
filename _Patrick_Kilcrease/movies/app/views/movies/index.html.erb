@@ -1,0 +1,19 @@
+<h1>Welcome to RetFlix! See our full list of movies below or search for your favorite!</h1>
+<%= render 'search' %>
+
+<%= link_to "Enter a new movie", new_movie_path %>
+
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+  </tr>
+  <%@movies.each do |movie| %>
+  <tr>
+    <td><%="#{movie.title}(#{movie.year_released})"%></td>
+    <td><%=movie.description%></td>
+  </tr>
+  <%end%>
+</table>
+

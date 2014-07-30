@@ -1,0 +1,9 @@
+<%= form_for @url do |f| %>
+<fieldset>
+	<class='fields'>
+		<%= f.label "Shorten my URL" %>
+		<%= f.text_field :link%>
+</fieldset>
+<%= f.submit %>
+<%end%>
+<p><%= link_to "Take me back to the homepage.", urls_path %></p>

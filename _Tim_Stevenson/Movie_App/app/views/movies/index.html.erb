@@ -1,0 +1,12 @@
+<h1>Welcome to RetFlix! See our collection of movies below</h1>
+
+<%= render 'search' %>
+
+
+<ul>
+<% @movies.each do |movie| %>
+	<li><span><%= movie.title %> &ndash; <span><%=movie.description%></span>  <span>(<%=movie.year_released %>)</span></li>
+<% end %>
+
+
+</ul>

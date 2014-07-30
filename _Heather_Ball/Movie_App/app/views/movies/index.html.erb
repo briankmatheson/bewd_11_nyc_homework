@@ -1,0 +1,16 @@
+<h1>Welcome to Rrrrrretflix!</h1>
+<br>
+<p>The <strong>only</strong> place to find your favorite titles!</p>
+<br>
+Please see our movie selection below, and start picking your fave titles with their descriptions:</p>
+
+<%= render 'search' %>
+
+<h3><%=link_to "add a new movie", new_movie_path%></h3>
+
+<ul>
+	<% @movies.each do |movie| %>
+	<li><span><strong><%= movie.title %></strong> <%= movie.description %> <strong><%= movie.year_released %></strong> </span></li>
+	<%end%>
+</ul>
+ 
