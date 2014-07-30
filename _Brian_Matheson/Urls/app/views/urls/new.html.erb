@@ -1,0 +1,6 @@
+<% if active_session? %>
+  <%= render 'form' %>
+<% else %>
+  <%= access_denied %>
+<% end %>
+

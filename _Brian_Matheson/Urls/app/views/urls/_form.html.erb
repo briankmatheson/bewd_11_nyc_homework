@@ -1,0 +1,18 @@
+<% if @url.errors.any? %>
+  <h2>There were errors saving your url</h2>
+  <ul>
+    <% @url.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @url do |f| %>
+<fieldset>
+  <div class='fields'>
+    <%=f.label :link %>
+    <%=f.text_field :link %>
+  </div>
+</fieldset>
+<%= f.submit %>
+<%end%>
