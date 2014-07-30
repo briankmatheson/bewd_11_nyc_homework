@@ -1,3 +1,12 @@
+<% if @shirt.errors.any? %>
+  <h2>There were errors saving your shirt</h2>
+  <ul>
+    <% @shirt.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for :movie do |f| %>
   Title         : <%= f.text_field :title %><br />
   Year Released : <%= f.text_field :year_relased %><br />

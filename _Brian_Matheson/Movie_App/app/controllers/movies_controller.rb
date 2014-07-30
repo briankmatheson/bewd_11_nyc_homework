@@ -11,20 +11,29 @@ class MoviesController < ApplicationController
   def show
   end
 
-  def edit
+  def new
+  end
+
+  def update
     @movie = Movie.search(params[:id])
-    @movie.title = params[:title]
-    @movie.year_released = params[:year_released]
-    @movie.description = params[:description]
-    @movie.save
+    movie.update safe_movie_params
+    if @movie.save
+      redirect_to movie_path(movie)
+    else
+      render 'new'
+    end
   end    
 
-  def new
-    movie = Movie.new
-    movie.title = params[:title]
-    movie.year_released = params[:year_released]
-    movie.description = params[:description]
+  def create
+    movie = Movie.new(safe_movie_params)
     movie.save
+
+    redirect_to movie_path(movie)
+  end
+
+  private
+  def safe_movie_params
+    params.require('movie').permit(:title, :description, :year_released)
   end
 
 end
