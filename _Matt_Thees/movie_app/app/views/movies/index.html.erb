@@ -1,0 +1,10 @@
+<div class="jumbotron">
+  <h1>Movie App</h1>
+  <ul>
+    <% @movies.each do |movie| %>
+      <h3><%= movie.title %></h3>
+      <li><%= movie.description %></li>
+      <li><%= movie.year_released %></li>
+    <%end%>
+  </ul>
+</div>

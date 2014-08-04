@@ -57,6 +57,22 @@
 
 
 # 	-	Welcome the player to your game. Let them know who created the game. 
+<<<<<<< HEAD:homework/01_secret_number/secret_number.rb
+puts "Welcome, player! HB has created the game, so sit back relax and enjoy!"
+#	  -	Ask for the player's name then personally greet them by printing to the screen, "Hi player_name!"
+
+puts "What is your name, per favore?"
+
+user_name=gets
+puts user_name
+
+puts "Hallo there, #{user_name}!"
+
+#	  -	Any good game will communicate the rules. Let the player know they must guess a number between 1 and 10 
+#		and that they only have 3 tries to do so.
+
+puts "Now, for the game-- you must guess the number I am thinking of between 1 and 10, with only three tries...Godspeed!"
+=======
 # 		puts "Welcome to the secret number game"
 
 # #	  -	Ask for the player's name then personally greet them by printing to the screen, "Hi player_name!"
@@ -78,9 +94,22 @@
 		guess(guess_number)
 
 		
+>>>>>>> 7c26ac60a937675216eafd4289c71f93d36665bb:_Tim_Stevenson/secret_number.rb
 #
 #	Functionality: 
 #	 -	Hard code the secret number. Make it a random number between 1 and 10.
+
+def secret_number_game
+	secret_number = 4
+
+	if gets > 4
+		return "Oops, not high enough!"
+	if else gets < 4
+		return "That's a tad too high..."
+	if gets == 4
+		return "Congratulations, you've guessed it!"
+	end	
+
 #	 - 	Ask the user for their guess.
 #	 -	Verify if they were correct. If the player guesses correctly they win the game they should be congratulated and the game should end.
 #	 -	If they guess incorrectly, give the player some direction. If they guess too high let them know, if they guess too low, let them know.

@@ -1,0 +1,26 @@
+<h1> Welcome to Rewsly! </h1>
+<p><%= render 'search' %></p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Category</th>
+			<th>Upvotes</th>
+			<th>Link</th> 
+		</tr> 
+	</thead>
+	<tbody>
+		<tr>
+			<td><%=@story.title%></td>
+			<td><%=@story.category%></td>
+			<td><%=@story.upvotes%></td>
+			<td><%=@story.link%></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>
+	<%= link_to "Back to the homepage.", stories_path %>
+	<%= link_to "Edit this story.", edit_story_path(@story)%>
+</p>

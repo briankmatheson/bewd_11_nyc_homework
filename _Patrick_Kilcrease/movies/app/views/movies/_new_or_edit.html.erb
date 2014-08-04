@@ -1,0 +1,18 @@
+<%= form_for @movies do |f| %>
+<ul>
+<%= f.label :title %>
+<%= f.text_field :title %>
+</ul>
+<ul>
+<%= f.label :description %>
+<%= f.text_field :description %>
+</ul>
+<ul>
+<%= f.label :year_released %>
+<%= f.text_field :year_released %>
+</ul>
+<ul>
+<%= f.submit %>
+
+<% end %>
+</ul>

@@ -1,0 +1,10 @@
+<h1>Movies</h1>
+
+<p>Welcome to Retflix! See our collection of movies below.</p>
+
+<% @movies.each do |m| %>
+<p><%= m.title %></p>
+<p><%= m.descriptiom %></p>
+<p><%= m.year_released %></p>
+<% end %>
+

@@ -1,0 +1,11 @@
+<%= render 'search' %>
+
+
+<% @movies.each do |movie| %>
+<p>
+<li><%= movie.title %></li>
+<li><%= movie.description %></li>
+<li><%= movie.year_released %></li>
+<br>
+</p>
+<% end %>

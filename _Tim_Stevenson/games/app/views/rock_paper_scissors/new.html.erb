@@ -1,0 +1,11 @@
+<h1>Roche Papier Scissaux</h1>
+
+<p>Rock Paper Scissors shoot!</p>
+
+<br/>
+
+<h2>Choose your poison:<h2>
+<% @throws.each do |throw| %>
+
+<%= link_to image_tag("rock_paper_scissors/#{throw}.jpeg"), rock_paper_scissor_path(throw)%>
+<%end%>

@@ -1,0 +1,34 @@
+<style>
+    header {
+        text-align: center;
+        background: url("http://dash.ga.co/assets/jeff-bg.png");
+        background-size: cover;
+        color: white;
+    }
+    ul {
+      padding: 10px;
+    }
+    li {
+        display: inline;
+        padding: 0px 10px 0px 10px;
+    }
+  </style>
+
+
+<header>
+
+    <h1>Jeff's Blog</h1>
+</header>
+
+<h1>Welcome to RetFlix!</h1>
+<h2> See our collection of movies below.</h2>
+<table>
+<% @all_movies.each do |t| %>
+<tr>
+	
+	<td><%= @count+=1 %>. Title: <%= t.title %></td>
+	<td>Description: <%= t.description %></td>
+	<td>Year Released <%=t.year_released %></td>
+</tr>
+<% end %>
+</table>

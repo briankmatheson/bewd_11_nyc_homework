@@ -1,0 +1,11 @@
+SECRET NUMBER PAGE
+
+<h1> You must guess a number!</h1>
+
+<p> Just so you know I guessed <%= @secret_number %></p>
+
+<h2>Pick a number</h2>
+
+<% (1..5).each do |number| %>
+<%= link_to image_tag("secret_numbers/#{number}.jpeg"), secret_number_path(number) %>
+<%end%>

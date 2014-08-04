@@ -1,0 +1,19 @@
+<h1> Welcome to Rewsly! </h1>
+<p> Check out the latest stories below </p>
+<%= render 'search'%>
+<p> <%= link_to "Click here to add a new story", new_story_path %>
+
+<table>
+	<thead>
+		<tr>
+			<th> Today's Stories</th>
+		</tr> 
+	</thead>
+<%@stories.each do |story|%>
+	<tbody>
+		<tr>
+			<td><%=link_to story.title, story_path(story.id)%></td>
+		</tr>
+	</tbody>
+	<%end%>
+</table>

@@ -1,0 +1,13 @@
+<h1>Well....</h1>
+<h2> I threw <%= @comp_result %></h2>
+<h2> You threw <%= @player_throw %> </h2>
+<hr/>
+<h3><%= @msg %><h3>
+  <% if @won %>
+  <p><%= image_tag 'games/cat-wins.gif' %></p>
+  <% else %>
+  <p><%= image_tag 'games/loser.gif' %></p>
+  <%end%>
+  <p>
+  <h3><%= link_to "PLAY AGAIN", new_rock_paper_scissor_path %></h3>
+</p>

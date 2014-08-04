@@ -1,0 +1,17 @@
+<p>
+	<strong>Title:</strong>
+	<%= @movie.title%>
+</p>
+<p>
+	<strong>Description:</strong>
+	<%= @movie.description%>
+</p>
+<p>
+	<strong>Year_Released:</strong>
+	<%= @movie.year_released%>
+</p>
+<p>
+	<%= link_to "Home", movies_path %>
+	<%= link_to "Edit", edit_movie_path(@movie) %>
+	<%= link_to "Destroy", movie_path(@movie), method: :delete, data: { confirm: "Are you sure?"}%>
+</p>
