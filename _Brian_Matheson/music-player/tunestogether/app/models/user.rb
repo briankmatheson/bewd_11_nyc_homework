@@ -1,16 +1,19 @@
 class User < ActiveRecord::Base
   
-  def create_user(params)
-    user = User.new
-    user.handle = params[:handle]
-    user.email = params[:email]
-    user.password = password_hash(params[:password])
+  def self.create_with_hashed_password(params)
+    password = password_hash(params[:password])
+    params[:password] = password
+    User.create(params)
+  end
 
-    user.save
+  def self.find_with_hashed_password(params)
+    password = password_hash(params[:password])
+    handle = params[:handle]
+    User.where(handle:handle, password:password).first
   end
 
   private
-  def password_hash(password)
+  def self.password_hash(password)
     return Digest::SHA2.hexdigest(password)
   end
 end
