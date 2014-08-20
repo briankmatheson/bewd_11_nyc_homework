@@ -1,0 +1,7 @@
+<h1> Sign in here</h1>
+
+<%= form_tag sessions_path do %>
+	<p><%= text_field_tag :username, nil, placeholder: 'Username' %></p>
+	<p><%= text_field_tag :password, nil, placeholder: 'Password' %></p>
+	<%= submit_tag "Login" %>
+<%end%>

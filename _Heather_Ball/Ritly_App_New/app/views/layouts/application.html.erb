@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ritly</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if logged_in? %>
+Hi, <%= current_user.username%> - <%= link_to 'Shorten new URL', new_url_path%> | <%= link_to "Logout", logout_path %>
+<%else%>
+<%= link_to "Login", new_session_path %>
+<%end%>
+<hr/>
+<ul>
+<%= session.keys.each do |key| %>
+<li><%="#{key}: #{session[key]}"%></li>
+<%end%>
+<% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+  <%= yield %>
+
+
+</body>
+</html>

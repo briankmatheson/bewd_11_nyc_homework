@@ -1,0 +1,44 @@
+<h1>Add a New Movie</h1>
+
+<%= form_for :movie, url: movies_path do |f| %>
+
+  <% if @movie.errors.any? %>
+  <!-- Check for errors -->
+
+    <div id="error_explanation">
+
+      <h2><%= pluralize(@movie.errors.count, "error") %> prohibited this movie from being saved</h2>
+      <!-- pluralize is a Rails helper that takes a number and a string as its arguments. If the number is greater than one, the string will be automatically pluralized. -->
+
+      <ul>
+        <% @movie.errors.full_messages.each do |msg| %>
+          <!-- Show a list of all errors -->
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+
+    </div>
+
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :year_released %><br>
+    <%= f.text_field :year_released %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<%= link_to "Back", movies_path %>

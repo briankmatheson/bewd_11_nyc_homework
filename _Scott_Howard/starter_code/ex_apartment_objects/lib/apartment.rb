@@ -8,6 +8,8 @@ class Apartment
 		@apt_sqft = apt_sqft
 		@apt_bedrooms = apt_bedrooms
 		@apt_bathrooms = apt_bathrooms
+		@renter = nil
+		@rent = nil
 	end
 
 	def self.rent=(rent)

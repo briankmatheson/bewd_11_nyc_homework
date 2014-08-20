@@ -1,0 +1,14 @@
+<h1>Welcome to Rock Paper Scissors!</h1>
+
+<p>To play this game, all you have to do is beat the computer at Rock Paper Scissors. If you guess <u>right</u>, you win!</p>
+
+<p>Choose carefully... you only get one try!</p>
+
+<br/>
+
+<h2>Pick a move:<h2>
+	
+
+<% @choices.each do |choice| %>
+<%= link_to image_tag("rock_paper_scissors/#{choice}.jpeg"), rock_paper_scissor_path(choice)%>
+<% end %>

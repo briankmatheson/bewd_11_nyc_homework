@@ -2,10 +2,11 @@
 
 <%= render 'search' %>
 
+<p><%= link_to "Add a movie to the collection", new_movie_path %></p>
 
 <ul>
 <% @movies.each do |movie| %>
-	<li><span><%= movie.title %> &ndash; <span><%=movie.description%></span>  <span>(<%=movie.year_released %>)</span></li>
+	<li><span><%= link_to movie.title, movie_path(movie.id) %> &ndash; <span><%=movie.description%></span>  <span>(<%=movie.year_released %>)</span></li>
 <% end %>
 
 

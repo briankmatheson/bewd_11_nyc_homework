@@ -1,0 +1,16 @@
+<h1>Welcome to Rewsly</h1>
+
+<%= render 'search' %>
+
+<%= button_to "Show All", root_path, method: :get %>
+<%= button_to 'New Story', new_story_path, method: :get %>
+
+<% @stories.each do |story| %>
+  <h2><%= story.title %></h2>
+  <span><a href="<%= story.link %>">View Story</a></span>
+  <p> Upvotes:<%= story.upvotes %></p>
+  <p>Category:<%= story.category %></p>
+  <p><%= link_to 'Edit', edit_story_path(story) %></p>
+  <p><%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?'}%></p>
+<% end %>
+

@@ -1,0 +1,22 @@
+<h1>Welcome to RetFlix! View our collection of movies below</h1>
+
+<%= render 'search' %>
+
+<section>
+
+<%= link_to 'Add a new movie', new_movie_path %>
+
+</section>
+
+<% @movie_search.each do |movie|%>
+
+<section>
+
+  <h3><%=link_to movie.title, movie_path(movie.id)%></h3>
+  <p> <%=movie.description%></p>
+  <%=link_to 'Edit', edit_movie_path(movie)%>
+
+</section>
+
+<%end%>
+

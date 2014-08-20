@@ -1,0 +1,5 @@
+<h1><%= @url.hash_code %> is your short code for <%= @url.link %></h1>
+
+<p> you can direct users to this Ritly URL: <%= link_to @full_path %> </p>
+
+<p>The Ritly URL redirects them to <%= link_to @url.link, @url.link %></p>

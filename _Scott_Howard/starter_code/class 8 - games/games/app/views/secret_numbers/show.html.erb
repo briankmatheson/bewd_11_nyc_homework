@@ -1,0 +1,13 @@
+<h1>Well....</h1>
+<h2> I guessed <%= @secret_number %></h2>
+<h2> You guessed <%= @chosen_number %> </h2>
+<hr/>
+<h3><%= @msg %><h3>
+  <% if @won %>
+  <p><%= image_tag 'games/cat-wins.gif' %></p>
+  <% else %>
+  <p><%= image_tag 'games/loser.gif' %></p>
+  <%end%>
+  <p>
+  <h3><%= link_to "PLAY AGAIN", new_secret_number_path %></h3>
+</p>
