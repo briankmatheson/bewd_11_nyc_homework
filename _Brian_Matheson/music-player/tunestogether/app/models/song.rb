@@ -1,5 +1,3 @@
-#require "mp3info"
-
 class Song < ActiveRecord::Base
   # def import_new_song(filename)
   #   Mp3Info.open(filename) do |mp3|
