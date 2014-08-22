@@ -1,0 +1,5 @@
+<h1>File Upload</h1>
+<p><%= form_for @upload, :url => upload_index_path, :html => { :multipart => true } do |form| %>
+  <%= form.file_field :file %>
+  <%= form.submit %>
+<% end %>
