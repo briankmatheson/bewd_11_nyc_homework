@@ -10,7 +10,7 @@ RSpec.describe Song, :type => :model do
     end
 
     let(:import) do
-      Song.import_new_song("spec/01 Bubba Slide.mp3")
+      Song.import_new_song("spec/01 Bubba Slide.mp3", "url-placeholder")
     end
 
     it "creates a new song" do

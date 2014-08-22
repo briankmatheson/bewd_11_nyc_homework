@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820210402) do
+ActiveRecord::Schema.define(version: 20140822191800) do
 
   create_table "data_files", force: true do |t|
     t.datetime "created_at"
@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 20140820210402) do
     t.datetime "file_updated_at"
   end
 
+  create_table "playlist_songs", force: true do |t|
+    t.integer  "playlist_id"
+    t.integer  "song_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "playlists", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "songs", force: true do |t|
     t.string   "name"
     t.string   "album"
@@ -29,6 +43,13 @@ ActiveRecord::Schema.define(version: 20140820210402) do
     t.string   "album_artist"
     t.string   "data_url"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stations", force: true do |t|
+    t.integer  "current_song_id"
+    t.integer  "playlist_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :songs
   
   def self.create_with_hashed_password(params)
     password = password_hash(params[:password])

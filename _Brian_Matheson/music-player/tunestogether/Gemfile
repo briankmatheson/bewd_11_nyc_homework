@@ -47,3 +47,5 @@ gem 'ruby-mp3info'
 # Upload files
 gem 'paperclip'
 
+# libshout support
+gem 'ruby-shout'

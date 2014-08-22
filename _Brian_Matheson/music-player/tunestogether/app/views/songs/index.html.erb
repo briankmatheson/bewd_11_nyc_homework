@@ -1,0 +1,38 @@
+<h1>Hey <%= @user.handle %>, let's listen to some tunes</h1>
+
+<p><%= link_to "upload", upload_index_path %></p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<table>
+  <% @songs.each do |song|%>
+  <tr>
+    <td><%= song.album_artist %></td>
+    <td><%= song.album %></td>
+    <td><%= song.artist %></td>
+    <td><%= link_to song.name, song.data_url, :class => "play"%></td>
+    <td><%= link_to song.name, song_path(song), :class => "html5"%></td>
+  </tr>
+  <%end%>
+</table>
+
+
+<script>
+$(document).ready(function() {
+    var audioSection = $('section#audio');
+    $('a.html5').click(function() {
+ 
+        var audio = $('<audio>', {
+             controls : 'controls'
+        });
+ 
+        var url = $(this).attr('href');
+        $('<source>').attr('src', url).appendTo(audio);
+        audioSection.html(audio);
+        return false;
+    });
+});
+</script>
+<section id="audio"> 
+</section>
+
