@@ -1,7 +1,8 @@
 class Station < ActiveRecord::Base
   require "shout"
+  require "open-uri"
 
-  def stream_file (filename, artist, name)
+  def stream_file (url, artist, name)
     @blocksize = 16384
     @shout = Shout.new ({ 
       :host => "localhost",
@@ -10,19 +11,16 @@ class Station < ActiveRecord::Base
       :pass => "gr8passwd",
       :format => Shout::MP3 })
     @meta = ShoutMetadata.new
-    @meta.add 'filename', filename
     @meta.add 'artist', artist
     @meta.add 'title', name
 
     @shout.mount = 'stream'
     @shout.connect
     @shout.metadata = @meta
-    File.open(filename) do |file|
-      loop do
-        data = file.read(@blocksize)
-        @shout.send data
-        @shout.sync
-      end
-    end
+
+    data = open("http://localhost:3000#{url}")
+    
+    @shout.send data
+    @shout.sync
   end
 end
