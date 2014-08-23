@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   resources:upload
   resources:sessions
   resources:songs
+  resources:stations
+  resources:users
   root 'sessions#new'
   get '/logout', to: "sessions#destroy", as: 'logout'
+  post '/change_staiton', to: "songs#change_station", as: 'change_station'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

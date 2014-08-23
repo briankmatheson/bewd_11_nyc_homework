@@ -5,7 +5,12 @@ class User < ActiveRecord::Base
   def self.create_with_hashed_password(params)
     password = password_hash(params[:password])
     params[:password] = password
-    User.create(params)
+    user = User.create(params)
+    station = Station.create
+    station.user_id = user.id
+    station.save
+    user.current_station = station.id
+    user.save
   end
 
   def self.find_with_hashed_password(params)

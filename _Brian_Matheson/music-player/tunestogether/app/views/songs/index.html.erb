@@ -1,10 +1,22 @@
-<%=@station%>
+<p>Currently listening to: <%= @station.user.handle %>'s tunes</p>
 
-<section id="audio">
-  <audio controls autoplay>
-    <source src="http://localhost:8000/<%=@station%>" preload="auto">
-  </audio>
-</section>
+<%= form_tag(change_station_path, method: "post") do %>
+  <%= label_tag(:q, "Listen in:") %>
+      <%= select(:handle, nil, @stations) %>
+  <%= submit_tag("go") %>
+<% end %>
+
+
+<audio id="player" autoplay>
+  <source src="http://localhost:8000/<%=@station%>" preload="auto">
+</audio>
+
+<div>
+  <button onclick="document.getElementById('player').play()">Play</button>
+  <button onclick="document.getElementById('player').pause()">Pause</button>
+  <button onclick="document.getElementById('player').volume+=0.1">Volume Up</button>
+  <button onclick="document.getElementById('player').volume-=0.1">Volume Down</button>
+</div> 
 
 
 <h1>Hey <%= @user.handle %>, let's listen to some tunes</h1>
