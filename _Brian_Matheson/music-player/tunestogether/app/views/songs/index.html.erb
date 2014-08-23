@@ -1,8 +1,16 @@
+<%=@user.station.id%>
+
+<section id="audio">
+  <audio controls autoplay>
+    <source src="http://localhost:8000/<%=@user.station.id%>" preload="auto">
+  </audio>
+</section>
+
+
 <h1>Hey <%= @user.handle %>, let's listen to some tunes</h1>
 
 <p><%= link_to "upload", upload_index_path %></p>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <table>
   <% @songs.each do |song|%>
@@ -11,28 +19,9 @@
     <td><%= song.album %></td>
     <td><%= song.artist %></td>
     <td><%= link_to song.name, song.data_url, :class => "play"%></td>
-    <td><%= link_to song.name, song_path(song), :class => "enqueue"%></td>
+    <td><%= link_to song.name, song_path(song) %></td>
   </tr>
   <%end%>
 </table>
 
-
-<script>
-$(document).ready(function() {
-    var audioSection = $('section#audio');
-    $('a.enqueue).click(function() {
- 
-        var audio = $('<audio>', {
-             controls : 'controls'
-        });
- 
-        var url = $(this).attr('href');
-        $('<source>').attr('src', url).appendTo(audio);
-        audioSection.html(audio);
-        return false;
-    });
-});
-</script>
-<section id="audio"> 
-</section>
 
