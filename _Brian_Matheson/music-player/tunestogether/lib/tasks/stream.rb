@@ -18,17 +18,15 @@ class Stream
   def send(args)
     playlist_arg = args[0].to_i
     station = args[1]
-  
+   
     playlist = Playlist.where(id:playlist_arg).first
     songs = playlist.songs
 
-      
-    @shout = Shout.new ({ 
-                          :host => "localhost",
-                          :port => 8000,
-                          :user => "source",
-                          :pass => "gr8passwd",
-                          :format => Shout::MP3 })
+    array = IO.readlines "config/stream.conf"
+    string = array.join
+    hash = JSON.parse(string, {symbolize_names:true})
+    hash[:format] = Shout::MP3
+    @shout = Shout.new (hash)
     
     @shout.mount = station
     @shout.connect

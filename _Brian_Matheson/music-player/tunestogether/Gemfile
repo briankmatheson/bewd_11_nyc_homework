@@ -52,3 +52,6 @@ gem 'ruby-shout'
 
 # rest_client support
 gem 'rest_client'
+
+# json parser
+gem 'json'
