@@ -19,16 +19,18 @@ class SongsController < ApplicationController
     @stations = list_stations
   end
   def enqueue (url, artist, name)
-    station = current_user.current_station
+    station = Station.find(current_user.station)
     station.stream_file(url, artist, name)
   end
   def list_stations
     User.all.map {|user| user.handle}
   end
   def change_station
-    handle = change_params[:handle]
-    user = User.where(handle:handle)
-    current_user.current_station = user.station.id
+    handle = params[:handle]
+    listen_to_user = User.where(handle:handle).first
+
+    current_user.set_current_station(listen_to_user.station.id)
+
     redirect_to songs_path
   end
 
