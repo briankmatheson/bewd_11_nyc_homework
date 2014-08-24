@@ -23,7 +23,8 @@ class SongsController < ApplicationController
     station.stream_file(url, artist, name)
   end
   def list_stations
-    User.all.map {|user| user.handle}
+    stations_list = User.all.map {|user| user.handle}
+    stations_list.unshift Station.find(current_user.current_station).user.handle
   end
   def change_station
     handle = params[:handle]
