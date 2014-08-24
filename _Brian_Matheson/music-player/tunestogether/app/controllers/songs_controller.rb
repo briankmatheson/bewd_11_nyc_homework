@@ -1,4 +1,5 @@
 class SongsController < ApplicationController
+  before_filter :authenticate_user!
   helper_method :enqueue
   helper_method :change_station
   helper_method :list_stations
