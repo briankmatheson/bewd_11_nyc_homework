@@ -30,7 +30,8 @@ class Stream
     playlist_songs = PlaylistSong.where(playlist_id:playlist_arg)
     system "echo `date` playing pid: #{$$} song count: #{playlist_songs.count} >> /tmp/playing.log"
 
-    while playlist_songs.count >= 0 do
+    while playlist_songs.count > 0 do
+      playlist_songs = PlaylistSong.where(playlist_id:playlist_arg)
       song = playlist_songs.first.song
       url = "http://localhost:3000/#{song.data_url}"
       
@@ -58,7 +59,7 @@ class Stream
       @shout.send chunk
       @shout.sync
       playlist_songs.first.delete
-      playlist_songs.save
+      system "echo `date` playing pid: #{$$} pls count: #{playlist_songs.count} >> /tmp/playing.log"
     end
     @shout.disconnect
   end
