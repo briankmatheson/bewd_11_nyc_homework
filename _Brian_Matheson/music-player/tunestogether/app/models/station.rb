@@ -1,11 +1,12 @@
 class Station < ActiveRecord::Base
   belongs_to :user
 
-  def stream_file (url, artist, name)
-
-    system "echo #{self.id} > /tmp/station"
-
-    system "echo http://localhost:3000#{url} > /tmp/playlist.txt"
-    system "test -e /tmp/playing || lib/tasks/stream.rb /tmp/playlist.txt #{self.id}&"
+  def stream (playlist)
+    # start the streaming server if not already running
+    system "test -e /tmp/playing.#{self.id} || lib/tasks/stream.rb #{playlist.id} #{self.id} &"
+  end
+  def kill
+    # kill the streaming server if running
+    system "kill `cat /tmp/playing.#{self.id}`"
   end
 end

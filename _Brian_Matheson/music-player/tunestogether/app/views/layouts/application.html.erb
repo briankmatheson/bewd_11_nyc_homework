@@ -10,23 +10,12 @@
 <body>
 
 <% flash.each do |name, msg| -%>
-      <%= content_tag :div, msg, class: name %>
-    <% end -%>
-
-<%= link_to "Logout", logout_path %>
-|
-<%= link_to "Songs", songs_path %>
-
-<div>
-  <button onclick="document.getElementById('player').play()">Play</button>
-  <button onclick="document.getElementById('player').pause()">Pause</button>
-  <button onclick="document.getElementById('player').volume+=0.1">Volume Up</button>
-  <button onclick="document.getElementById('player').volume-=0.1">Volume Down</button>
-
-<audio id="player" autoplay>
-  <source src="http://localhost:8000/<%=station.id%>" preload="auto">
-</audio>
-</div> 
+  <%= content_tag :div, msg, class: name %>
+<% end -%>
+    
+<% if logged_in? %>
+  <%= render 'layouts/header' %>
+<% end %>
 
 <%= yield %>
 

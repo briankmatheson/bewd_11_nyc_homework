@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   root 'sessions#new'
   get '/logout', to: "sessions#destroy", as: 'logout'
   post '/change_staiton', to: "songs#change_station", as: 'change_station'
+  get '/dequeue_song', to: "songs#dequeue", as: 'dequeue_song'
+  get '/start', to: "songs#start", as: 'start'
+  get '/stop', to: "songs#stop", as: 'stop'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

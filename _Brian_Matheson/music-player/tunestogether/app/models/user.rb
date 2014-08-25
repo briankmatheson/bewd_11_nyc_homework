@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :songs
   has_one :station
+  has_many :playlists
 
   def set_current_station(id)
     self.current_station = id
@@ -11,11 +12,18 @@ class User < ActiveRecord::Base
     password = password_hash(params[:password])
     params[:password] = password
     User.create(params)
-    user = User.where(handle:params[:handle])
+    user = User.where(handle:params[:handle]).first
+
     station = Station.new
     station.user_id = user.id
     station.save
     user.current_station = station.id
+
+    playlist = Playlist.new
+    playlist.user_id = user.id
+    playlist.save
+    user.current_playlist = playlist.id
+
     user.save
   end
 

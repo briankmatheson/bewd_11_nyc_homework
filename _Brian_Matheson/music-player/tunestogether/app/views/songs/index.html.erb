@@ -12,16 +12,32 @@
 
 <h1>Hey <%= @user.handle %>, let's listen to some tunes</h1>
 
+
+<h2>Current Playlist</h2> Streaming: <%=link_to "start", start_path%> <%=link_to "stop", stop_path%>
+<table>
+  <% if @playlist_songs.count > 0 %>
+  <% @playlist_songs.each do |playlist_song|%>
+  <tr>
+    <td><%= playlist_song.song.album_artist %></td>
+    <td><%= playlist_song.song.album %></td>
+    <td><%= playlist_song.song.artist %></td>
+    <td><%=link_to "remove", dequeue_song_path(playlist_song.id) %>
+      <%= playlist_song.song.name %></td>
+  </tr>
+  <%end%>
+  <%end%>
+</table>
+
+
+
+<h2>Library</h2>
 <p><%= link_to "upload", upload_index_path %></p>
-
-
 <table>
   <% @songs.each do |song|%>
   <tr>
     <td><%= song.album_artist %></td>
     <td><%= song.album %></td>
     <td><%= song.artist %></td>
-    <td><%= link_to song.name, song.data_url, :class => "play"%></td>
     <td><%= link_to song.name, song_path(song) %></td>
   </tr>
   <%end%>

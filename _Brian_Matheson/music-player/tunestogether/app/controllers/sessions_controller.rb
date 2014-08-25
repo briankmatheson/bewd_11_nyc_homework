@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     end
   end
   def destroy
+    Station.find(current_user.current_station).kill
     session[:user_id] = nil
     redirect_to root_path
   end
