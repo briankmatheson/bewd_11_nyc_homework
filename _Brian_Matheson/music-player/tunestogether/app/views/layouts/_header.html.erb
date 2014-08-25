@@ -9,6 +9,6 @@
   <button onclick="document.getElementById('player').volume-=0.1">Volume Down</button>
 
 <audio id="player" autoplay>
-  <source src="http://localhost:8000/<%=station.id%>" preload="auto">
+  <source src="http://localhost:8000/<%=station.id%>?nocache=<%=rand(9999999999)%>" preload="none">
 </audio>
 </div> 

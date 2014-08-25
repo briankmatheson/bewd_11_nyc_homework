@@ -24,4 +24,8 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path
     end
   end
+
+  def cache_buster
+    rand(999999999)
+  end
 end

@@ -3,6 +3,7 @@ class SongsController < ApplicationController
   helper_method :enqueue
   helper_method :change_station
   helper_method :list_stations
+  helper_method :cache_buster
 
   def new
   end
