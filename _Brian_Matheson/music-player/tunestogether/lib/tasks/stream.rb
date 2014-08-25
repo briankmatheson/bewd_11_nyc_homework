@@ -33,7 +33,7 @@ class Stream
     while playlist_songs.count > 0 do
       playlist_songs = PlaylistSong.where(playlist_id:playlist_arg)
       song = playlist_songs.first.song
-      url = "http://localhost:3000/#{song.data_url}"
+      url = "http://zz.brianmatheson.com/#{song.data_url}"
       
       response = RestClient.get(url)
 
