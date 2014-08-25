@@ -9,7 +9,10 @@ class UploadController < ApplicationController
   def create
     @file = DataFile.create(upload_params)
     @file.file = params[:data_file][:file]
-    @file.save
+    if ! @file.save 
+      flash[:notice] = "failed to save file"
+      return false
+    end
     @user =  current_user
     @song = Song.import_new_song(@file.file.path, @file.file.url, @user)
     redirect_to songs_path

@@ -16,8 +16,8 @@ listen "/tmp/unicorn.tunestogether.sock"
 
 # Number of processes
 # worker_processes 4
-worker_processes 1
+worker_processes 3
 
 # Time-out
-timeout 30
+timeout 300
 

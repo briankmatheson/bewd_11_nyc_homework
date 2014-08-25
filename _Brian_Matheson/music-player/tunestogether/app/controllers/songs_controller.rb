@@ -48,6 +48,7 @@ class SongsController < ApplicationController
     @playlist_id = current_user.current_playlist
     @playlist = Playlist.find(@playlist_id)
     Station.find(current_user.station).stream(@playlist)
+    sleep 3
     redirect_to songs_path
   end
   def stop
