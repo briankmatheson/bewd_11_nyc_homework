@@ -1,6 +1,6 @@
 # Set the working application directory
 # working_directory "/path/to/your/app"
-working_directory "/home/bmath/homework/music-player/tunestogether"
+working_directory "/home/bmath/tunestogether/"
 
 # Unicorn PID file location
 pid "/tmp/unicorn.pid"
@@ -16,7 +16,7 @@ listen "/tmp/unicorn.tunestogether.sock"
 
 # Number of processes
 # worker_processes 4
-worker_processes 4
+worker_processes 1
 
 # Time-out
 timeout 30
